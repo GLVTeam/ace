@@ -1,22 +1,37 @@
 package com.github.gabrielrechbrand.ace.service;
 
 import com.github.gabrielrechbrand.ace.model.AbstractEntity;
+import com.github.gabrielrechbrand.ace.repository.AbstractRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
 @Service
-public interface AbstractService<T extends AbstractEntity> {
+public abstract class AbstractService<T extends AbstractEntity, R extends AbstractRepository<T, UUID>> {
 
-    T create(T entity);
+    @Autowired
+    protected R repository;
 
-    T update(T entity);
+    public T create(T entity) {
+        return repository.save(entity);
+    }
 
-    void delete(UUID id);
+    public T update(T entity) {
+        return repository.save(entity);
+    }
 
-    List<T> findAll();
+    public void delete(UUID id) {
+        repository.deleteById(id);
+    }
 
-    T findById(UUID id);
+    public List<T> findAll() {
+        return (List<T>) repository.findAll();
+    }
+
+    public T findById(UUID id) {
+        return repository.findById(id).orElse(null);
+    }
 
 }

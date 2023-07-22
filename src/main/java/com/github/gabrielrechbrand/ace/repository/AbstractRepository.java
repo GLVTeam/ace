@@ -2,9 +2,9 @@ package com.github.gabrielrechbrand.ace.repository;
 
 
 import com.github.gabrielrechbrand.ace.model.AbstractEntity;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.NoRepositoryBean;
 
-import java.util.UUID;
-
-public interface AbstractRepository<T extends AbstractEntity> extends JpaRepository<T, UUID> {
+@NoRepositoryBean
+public interface AbstractRepository<T extends AbstractEntity, K>  extends CrudRepository<T, K> {
 }
